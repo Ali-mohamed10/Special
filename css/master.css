@@ -164,7 +164,7 @@ html {
     right: 0;
     top: 50%;
     transform: translateY(-50%);
-    z-index: 10;
+    z-index: 100;
     width: 50px;
 }
 .nav-bullets .bullet {
@@ -222,7 +222,8 @@ html {
     color: white;
     min-height: 100vh;
     background-image: url(../imgs/6.jpg);
-    background-size: cover;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
     transition: .6s linear;
     position: relative;
 }
@@ -245,7 +246,7 @@ html {
     align-items: center;
 }
 .header-area .links {
-    display: none;
+    opacity: 1;
 }
 @media (min-width: 768px) {
     .header-area .links {
@@ -305,8 +306,14 @@ html {
     .toggle-menu {
         display: block;
     }
+    .header-area .links {
+        opacity: 0;
+        height: 0;
+    }
     .header-area .links.open {
-        display: block;
+        opacity: 1;
+        height: 330px;
+        transition: .3s;
         background-color: white;
         position: absolute;
         top: 75px;
@@ -326,20 +333,17 @@ html {
     .header-area .links.open li {
         padding: 0;
     }
-    .header-area .links.open li a:hover {
-        background-color: var(--main-colorHover);
-        color: white;
-    }
     .header-area .links.open li a {
         padding-left: 20px;
         color: var(--main-colorHover);
         font-weight: bold;
         display: block;
     }
+    
 }
 
 .landing-page .intro-text {
-    width: 400px;
+    width: 50%;
     position: absolute;
     z-index: 3;
     left: 50%;
@@ -347,7 +351,11 @@ html {
     transform: translate(-50%,-50%);
     text-align: center;
 }
-
+@media (max-width: 767px) {
+    .landing-page .intro-text {
+        width: 90%;
+    }
+}
 .intro-text span {
     color: var(--main-colorHover);
     transition: .3s;
@@ -578,6 +586,82 @@ html {
     width: 100%;
     height: 100%;
 }
+.gallery .our-designs {
+    position: relative;
+    height: 500px;
+    margin-bottom: 50px;
+}
+.gallery .our-designs .box {
+    position: relative;
+    height: 90%;
+    width: 60%;
+    margin: auto;
+}
+.gallery .our-designs img {
+    position: absolute;
+    width: 100%;
+    height: 70%;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    border: 10px solid #ddd;
+    transition: opacity 0.5s ease-in-out;
+    opacity: 0;
+    pointer-events: none;
+}
+.gallery .our-designs img.active {
+    opacity: 1;
+    z-index: 1;
+    pointer-events: auto;
+}
+
+
+.gallery button {
+    background-color: var(--main-colorHover);
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 20px;
+    color: white;
+    font-weight: bold;
+    border: none;
+    position: absolute;
+    cursor: pointer;
+}
+.gallery button:nth-of-type(1) {
+    top: 50%;
+    right: -50px;
+    transform: translateY(-50%);
+}
+.gallery button:nth-of-type(2) {
+    top: 50%;
+    left: -50px;
+    transform: translateY(-50%);
+}
+.gallery .bullets {
+    display: flex;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 60px;
+}
+.our-designs .bullets span {
+    display: flex;
+    align-items: center;
+    width: 20px;
+    height: 20px;
+    justify-content: center;
+    border-radius: 50%;
+    background-color: white;
+    margin-right: 10px;
+    border: 2px solid var(--main-colorHover);
+    font-size: 12px;
+    font-weight: bold;
+    transition: .3s;
+}
+.our-designs .bullets span.active {
+    background-color: var(--main-colorHover);
+    color: white;
+}
 
 /* End Gallery */
 
@@ -597,9 +681,10 @@ html {
     animation-fill-mode: forwards;
     animation-play-state: paused;
 }
+
 @media (max-width: 767px) {
     .timeline .content {
-        min-height: 730px;
+        min-height: 800px;
         padding: 0;
     }
 }
@@ -670,13 +755,12 @@ html {
 }
 @media (max-width: 767px) {
     .timeline .content div h2 {
-        font-size: 17px;
-        white-space: nowrap;
+        font-size: 13px;
     }
 }
 @media (max-width: 767px) {
     .timeline .content div p {
-        font-size: 13px;
+        font-size: 12px;
     }
 }
 .timeline .content .year {
@@ -1016,11 +1100,3 @@ input::placeholder,textarea::placeholder {
     color: var(--main-colorHover);
 }
 /* End Footer */
-
-
-
-
-
-
-
-
