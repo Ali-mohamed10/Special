@@ -238,17 +238,24 @@ window.addEventListener("scroll",() => {
 let ourSkills = document.querySelector(".our-skills");
 let spanSkills = document.querySelectorAll(".our-skills span");
 
-window.onscroll = function () {    
+window.addEventListener("scroll",() => {
     if (scrollY > 679) {
         spanSkills.forEach((sk) => sk.style.animationPlayState = "running");
     }
+});
     
-}
 
 /* End Skills Page */
 
 /* Start Gallery */
+let gallerySection = document.querySelector(".gallery");
 let ourGallery = document.querySelectorAll(".gallery .imgs div img");
+
+window.addEventListener("scroll",() => {
+    if (scrollY >= 1100) {
+        gallerySection.style.opacity = "1";
+    }
+});
 
 ourGallery.forEach((img) => {
     img.addEventListener("click",function (e) {
@@ -397,5 +404,3 @@ function showPrevious() {
 
 
 /* End Testimonials */
-
-
