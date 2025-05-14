@@ -505,6 +505,10 @@ html {
 /* End Our Skills */
 
 /* Start Gallery */
+.gallery {
+    transition: .3s;
+    opacity: 0;
+}
 .gallery .content {
     padding: 50px 20px;
 }
@@ -517,6 +521,7 @@ html {
     justify-content: center;
     flex-wrap: wrap;
     gap: 10px;
+    transition: .3s;
 }
 .gallery .imgs div {
     flex-basis: 17%;
@@ -861,17 +866,7 @@ html {
     left: 50%;
     transform: translate(-50%,-50%);
     transition: .3s;
-    /* animation-name: feature-2;
-    animation-duration: .3s;
-    animation-fill-mode: forwards;
-    animation-play-state: paused; */
 }
-/* @keyframes feature-2 {
-    to {
-        width: 80px;
-        height: 80px;
-    }
-} */
 
 .our-features .content h3 {
     padding: 10px 0;
@@ -949,7 +944,7 @@ html {
 }
 .testimonials .box {
     position: absolute;
-    top: 30px; /* المسافة من الأعلى */
+    top: 30px;
     left: 50%;
     transform: translateX(-50%);
     display: none;
@@ -996,7 +991,7 @@ html {
 
 /* Start Contact Us */
 .contact-us {
-    background-image: url("/imgs/89124.jpg");
+    background-image: url("../imgs/89124.jpg");
     background-size: contain;
     position: relative;
 }
