@@ -35,52 +35,53 @@ colorsLis.forEach((li) => {
     });
 });
 
-// let backgroundOption = true;
-// let backgroundInterval;
-// let landing = document.querySelector(".landing-page");
-// const imgsArray = ["1.jpg", "2.jpg", "5.jpg", "4.jpg", "3.jpg", "6.jpg"];
+let backgroundOption = true;
+let backgroundInterval;
+let landing = document.querySelector(".landing-page");
+let imgsArray = ["first.jpg", "second.jpg", "third.jpg", "fourth.jpg", "fifth.jpg", "sixth.jpg"];
 
-// function manageBackgroundRandomization(enable) {
-//     clearInterval(backgroundInterval);
+function manageBackgroundRandomization(enable) {
+    clearInterval(backgroundInterval);
 
-//     if (enable) {
-//         backgroundInterval = setInterval(() => {
-//             let randomNum = Math.floor(Math.random() * imgsArray.length);
-//             landing.style.backgroundImage = `url("imgs/${imgsArray[randomNum]}")`;
-//         }, 4000);
-//     }
-// }
+    if (enable) {
+        backgroundInterval = setInterval(() => {
+            let randomNum = Math.floor(Math.random() * imgsArray.length);
+            landing.style.backgroundImage = 'url("imgs/' + imgsArray[randomNum] + '")';
+            console.log(window.localStorage.background);
+        }, 4000);
+    }
+}
 
-// const randomButtons = document.querySelectorAll(".settings-box .option-box:nth-of-type(2) button");
+const randomButtons = document.querySelectorAll(".settings-box .option-box:nth-of-type(2) button");
 
-// const localBackground = window.localStorage.getItem("background");
+const localBackground = window.localStorage.getItem("background");
 
-// if (localBackground !== null) {
-//     backgroundOption = localBackground === "yes";
+if (localBackground !== null) {
+    backgroundOption = localBackground === "yes";
 
-//     randomButtons.forEach((el) => el.classList.remove("active"));
-//     document.querySelector(`.settings-box .option-box:nth-of-type(2) button[data-background="${localBackground}"]`).classList.add("active");
+    randomButtons.forEach((el) => el.classList.remove("active"));
+    document.querySelector(`.settings-box .option-box:nth-of-type(2) button[data-background="${localBackground}"]`).classList.add("active");
 
-// } else {
-//     randomButtons.forEach((el) => el.classList.remove("active"));
-//     document.querySelector('.settings-box .option-box:nth-of-type(2) button[data-background="yes"]').classList.add("active");
-// }
+} else {
+    randomButtons.forEach((el) => el.classList.remove("active"));
+    document.querySelector('.settings-box .option-box:nth-of-type(2) button[data-background="yes"]').classList.add("active");
+}
 
-// manageBackgroundRandomization(backgroundOption);
+manageBackgroundRandomization(backgroundOption);
 
-// randomButtons.forEach((button) => {
-//     button.addEventListener("click", function (e) {
-//         randomButtons.forEach((el) => el.classList.remove("active"));
-//         e.currentTarget.classList.add("active");
+randomButtons.forEach((button) => {
+    button.addEventListener("click", function (e) {
+        randomButtons.forEach((el) => el.classList.remove("active"));
+        e.currentTarget.classList.add("active");
 
-//         const selectedOption = e.currentTarget.dataset.background;
-//         window.localStorage.setItem("background", selectedOption);
+        const selectedOption = e.currentTarget.dataset.background;
+        window.localStorage.setItem("background", selectedOption);
 
-//         backgroundOption = selectedOption === "yes";
+        backgroundOption = selectedOption === "yes";
 
-//         manageBackgroundRandomization(backgroundOption);
-//     });
-// });
+        manageBackgroundRandomization(backgroundOption);
+    });
+});
 
 
 const navBullets = document.querySelector(".nav-bullets");
