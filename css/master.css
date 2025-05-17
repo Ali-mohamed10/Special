@@ -223,8 +223,8 @@ html {
     min-height: 100vh;
     background-image: url(../imgs/6.jpg);
     background-size: 100% 100%;
+    transition: .4s;
     background-repeat: no-repeat;
-    transition: .6s linear;
     position: relative;
 }
 
@@ -246,7 +246,7 @@ html {
     align-items: center;
 }
 .header-area .links {
-    opacity: 1;
+    display: block;
 }
 @media (min-width: 768px) {
     .header-area .links {
@@ -307,11 +307,11 @@ html {
         display: block;
     }
     .header-area .links {
-        opacity: 0;
+        display: none;
         height: 0;
     }
     .header-area .links.open {
-        opacity: 1;
+        display: block;
         height: 330px;
         transition: .3s;
         background-color: white;
@@ -339,7 +339,12 @@ html {
         font-weight: bold;
         display: block;
     }
-    
+    .landing-page .intro-text h1 {
+        font-size: 25px;
+    }
+    .landing-page .intro-text p {
+        font-size: 13px;
+    }
 }
 
 .landing-page .intro-text {
@@ -521,7 +526,6 @@ html {
     justify-content: center;
     flex-wrap: wrap;
     gap: 10px;
-    transition: .3s;
 }
 .gallery .imgs div {
     flex-basis: 17%;
