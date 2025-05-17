@@ -151,7 +151,7 @@ function typeWriter() {
     }
 }
 
-window.addEventListener("load", typeWriter);
+window.addEventListener("load", typeWriter());
 
 /* end landing page */
 
@@ -232,7 +232,7 @@ const galleryImages = document.querySelectorAll(".gallery .imgs div img");
 
 
 window.addEventListener("scroll", function () {
-    const scrollThreshold = gallerySection.offsetTop;
+    const scrollThreshold = gallerySection.offsetTop - 200;
 
     if (window.scrollY >= scrollThreshold) {
         gallerySection.style.opacity = "1";
