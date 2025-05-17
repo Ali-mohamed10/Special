@@ -9,7 +9,7 @@ html {
 * {
     margin: 0;
     list-style: none;
-    -ms-box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 :root {
@@ -221,9 +221,8 @@ html {
 .landing-page {
     color: white;
     min-height: 100vh;
-    background-image: url(../imgs/6.jpg);
+    background-image: url(../imgs/first.jpg);
     background-size: 100% 100%;
-    transition: .4s;
     background-repeat: no-repeat;
     position: relative;
 }
@@ -244,6 +243,7 @@ html {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    white-space: nowrap;
 }
 .header-area .links {
     display: block;
