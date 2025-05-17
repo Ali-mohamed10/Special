@@ -47,7 +47,6 @@ function manageBackgroundRandomization(enable) {
         backgroundInterval = setInterval(() => {
             let randomNum = Math.floor(Math.random() * imgsArray.length);
             landing.style.backgroundImage = 'url("imgs/' + imgsArray[randomNum] + '")';
-            console.log(window.localStorage.background);
         }, 4000);
     }
 }
