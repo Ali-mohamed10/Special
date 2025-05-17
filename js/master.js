@@ -13,149 +13,132 @@ icon.onclick = () => {
     }
 };
 
-// defult color
-let colors = document.querySelectorAll(".settings-box .colors li");
+const colorsLis = document.querySelectorAll(".settings-box .colors li");
 
-if (window.localStorage.color) {
-    document.documentElement.style.setProperty("--main-colorHover",window.localStorage.color);
-    colors.forEach((el) => el.classList.remove("active"));
-    colors.forEach((e) => {
-        if (e.dataset.color === window.localStorage.color) {
-            e.classList.add("active");
-        }
-    });
+const localColor = window.localStorage.getItem("color");
+
+if (localColor !== null) {
+    document.documentElement.style.setProperty("--main-colorHover", localColor);
+    colorsLis.forEach((el) => el.classList.remove("active"));
+    document.querySelector(`.settings-box .colors li[data-color="${localColor}"]`).classList.add("active");
 }
 
-colors.forEach((li) => {
-    li.addEventListener("click",(e) => {
-        colors.forEach((el) => el.classList.remove("active"));
+colorsLis.forEach((li) => {
+    li.addEventListener("click", (e) => {
+        colorsLis.forEach((el) => el.classList.remove("active"));
         e.currentTarget.classList.add("active");
-        window.localStorage.color = e.currentTarget.dataset.color;
-        document.documentElement.style.setProperty("--main-colorHover",window.localStorage.color);
-    })                        
-});
 
-// defult background
+        const selectedColor = e.currentTarget.dataset.color;
+        window.localStorage.setItem("color", selectedColor);
+
+        document.documentElement.style.setProperty("--main-colorHover", selectedColor);
+    });
+});
 
 let backgroundOption = true;
-
-// because it be global
 let backgroundInterval;
+let landing = document.querySelector(".landing-page");
+const imgsArray = ["1.jpg", "2.jpg", "5.jpg", "4.jpg", "3.jpg", "6.jpg"];
 
-
-let randomButtons = document.querySelectorAll(".settings-box .option-box:nth-of-type(2) button");
-
-
-if (window.localStorage.background) {
-    randomButtons.forEach((el) => el.classList.remove("active"));
-    randomButtons.forEach((e) => {
-        if (e.dataset.background === window.localStorage.background) {
-            e.classList.add("active");
-        }
-    });
-}
-
-if (window.localStorage.background === "yes") {
-    backgroundOption = true;
-    randomizeImgs();
-} else {
-    backgroundOption = false;
+function manageBackgroundRandomization(enable) {
     clearInterval(backgroundInterval);
+
+    if (enable) {
+        backgroundInterval = setInterval(() => {
+            let randomNum = Math.floor(Math.random() * imgsArray.length);
+            landing.style.backgroundImage = `url("imgs/${imgsArray[randomNum]}")`;
+        }, 4000);
+    }
 }
 
-randomButtons.forEach((e) => {
-    e.addEventListener("click",(b) => {
-        randomButtons.forEach((el) => el.classList.remove("active"));
-        b.currentTarget.classList.add("active");
-        window.localStorage.background = b.currentTarget.dataset.background;
-        // background
-        if (b.currentTarget.dataset.background === "yes") {
-            backgroundOption = true;
-            randomizeImgs();
-        } else {
-            backgroundOption = false;
-            clearInterval(backgroundInterval);
-        }
-    });
-});
+const randomButtons = document.querySelectorAll(".settings-box .option-box:nth-of-type(2) button");
 
-// Show Bullets
+const localBackground = window.localStorage.getItem("background");
 
-let navBullets = document.querySelector(".nav-bullets");
-let bulletsButton = document.querySelectorAll(".settings-box .option-box:nth-of-type(3) button");
+if (localBackground !== null) {
+    backgroundOption = localBackground === "yes";
 
-if (window.localStorage.showBullets) {
-    bulletsButton.forEach((el) => el.classList.remove("active"));
-    bulletsButton.forEach((e) => {
-        if (e.dataset.bullets === window.localStorage.showBullets) {
-            e.classList.add("active");
-        }
-    });
-}
-if (window.localStorage.showBullets == "no") {
-    navBullets.style.display ="none";
+    randomButtons.forEach((el) => el.classList.remove("active"));
+    document.querySelector(`.settings-box .option-box:nth-of-type(2) button[data-background="${localBackground}"]`).classList.add("active");
+
 } else {
-    navBullets.style.display ="block";
+    randomButtons.forEach((el) => el.classList.remove("active"));
+    document.querySelector('.settings-box .option-box:nth-of-type(2) button[data-background="yes"]').classList.add("active");
 }
 
-bulletsButton.forEach((butt) => {
-    butt.addEventListener("click",(b) => {
-        bulletsButton.forEach((e) => e.classList.remove("active"));
-        b.currentTarget.classList.add("active");
-        window.localStorage.showBullets = b.currentTarget.dataset.bullets;
-        if (window.localStorage.showBullets == "no") {
-            navBullets.style.display ="none";
-        } else {
-            navBullets.style.display ="block";
-        }
+manageBackgroundRandomization(backgroundOption);
+
+randomButtons.forEach((button) => {
+    button.addEventListener("click", function (e) {
+        randomButtons.forEach((el) => el.classList.remove("active"));
+        e.currentTarget.classList.add("active");
+
+        const selectedOption = e.currentTarget.dataset.background;
+        window.localStorage.setItem("background", selectedOption);
+
+        backgroundOption = selectedOption === "yes";
+
+        manageBackgroundRandomization(backgroundOption);
     });
 });
 
-// Reset Button
 
-let reset = document.querySelector(".settings-box .reset button");
+const navBullets = document.querySelector(".nav-bullets");
+const bulletsButtons = document.querySelectorAll(".settings-box .option-box:nth-of-type(3) button");
 
-reset.addEventListener("click",() => {
+const localBullets = window.localStorage.getItem("showBullets");
+
+if (localBullets !== null) {
+    bulletsButtons.forEach((el) => el.classList.remove("active"));
+    document.querySelector(`.settings-box .option-box:nth-of-type(3) button[data-bullets="${localBullets}"]`).classList.add("active");
+
+    navBullets.style.display = localBullets === "no" ? "none" : "block";
+
+} else {
+    bulletsButtons.forEach((el) => el.classList.remove("active"));
+    document.querySelector('.settings-box .option-box:nth-of-type(3) button[data-bullets="yes"]').classList.add("active");
+    navBullets.style.display = "block";
+}
+
+bulletsButtons.forEach((button) => {
+    button.addEventListener("click", function (e) {
+        bulletsButtons.forEach((el) => el.classList.remove("active"));
+        e.currentTarget.classList.add("active");
+
+        const selectedOption = e.currentTarget.dataset.bullets;
+        window.localStorage.setItem("showBullets", selectedOption);
+
+        navBullets.style.display = selectedOption === "no" ? "none" : "block";
+    });
+});
+
+const resetButton = document.querySelector(".settings-box .reset button");
+
+resetButton.addEventListener("click", function () {
     window.localStorage.clear();
     location.reload();
 });
 
 /* end settings box */
 
-/* Start Nav Bullets */
-let bullets = document.querySelectorAll(".nav-bullets .bullet");
 
-bullets.forEach((bul) => {
-    bul.addEventListener("click",(e) => {
-        document.querySelector(e.target.dataset.section).scrollIntoView();
+/* Start Nav Bullets */
+const bullets = document.querySelectorAll(".nav-bullets .bullet");
+
+bullets.forEach((bullet) => {
+    bullet.addEventListener("click", function (e) {
+        document.querySelector(e.target.dataset.section).scrollIntoView({
+            behavior: 'smooth'
+        });
     });
 });
-
 /* End Nav Bullets */
 
+
 /* start landing page */
-let landing = document.querySelector(".landing-page");
-
-let imgsArray = ["1.jpg","2.jpg","3.jpg","4.jpg","5.jpg","6.jpg"];
-
-function randomizeImgs() {
-    if (backgroundOption === true) {
-        backgroundInterval = setInterval(() => {
-            let randomNum = Math.floor(Math.random() * imgsArray.length);
-            landing.style.backgroundImage = 'url("imgs/' + imgsArray[randomNum] + '")';
-        }, 4000);
-    }
-}
-
-if (randomButtons[0].classList.contains("active")) {
-    backgroundOption = true;
-    randomizeImgs();
-}
-
-// Defult Writing A Creative Word
 
 const text = "Creative ";
-const speed = 150; 
+const speed = 150;
 let i = 0;
 const animatedTextElement = document.getElementById("animatedText");
 
@@ -167,35 +150,32 @@ function typeWriter() {
     }
 }
 
-window.onload = typeWriter;
+window.addEventListener("load", typeWriter);
 
 /* end landing page */
 
+
 /* Start Nav Phone */
-let toggleMenu = document.querySelector(".toggle-menu");
-let links = document.querySelector(".links");
-var x = window.matchMedia("(min-width: 768px)");
+const toggleMenu = document.querySelector(".toggle-menu");
+const links = document.querySelector(".links");
+const mediaQuery = window.matchMedia("(min-width: 768px)");
 
 
-function media(x) {
+function handleMediaQueryChange(x) {
     if (x.matches) {
         links.classList.remove("open");
-        if (links.classList.contains("open")) {
-            document.querySelector(".intro-text").style.display = "none";
-        } else {
-            document.querySelector(".intro-text").style.display = "block";
-        }    
     }
 }
-media(x);
-x.addEventListener("change", function() {
-    media(x);
-});
+
+mediaQuery.addEventListener("change", handleMediaQueryChange);
+
+handleMediaQueryChange(mediaQuery);
 
 
-toggleMenu.addEventListener("click",(e) => {
+toggleMenu.addEventListener("click", function (e) {
     e.stopPropagation();
     links.classList.toggle("open");
+
     if (links.classList.contains("open")) {
         document.querySelector(".intro-text").style.display = "none";
     } else {
@@ -203,97 +183,99 @@ toggleMenu.addEventListener("click",(e) => {
     }
 });
 
-document.addEventListener("click",(e) => {
-    if (links.classList.contains("open") && e.currentTarget.className !== ".links") {
+document.addEventListener("click", function (e) {
+    if (links.classList.contains("open") && !links.contains(e.target) && e.target !== toggleMenu) {
         links.classList.remove("open");
-        if (links.classList.contains("open")) {
-            document.querySelector(".intro-text").style.display = "none";
-        } else {
-            document.querySelector(".intro-text").style.display = "block";
-        }
+        document.querySelector(".intro-text").style.display = "block";
     }
 });
-
-
 
 /* End Nav Phone */
 
-/* Start About Us */
-let aboutSection = document.querySelector(".about-us");
 
-window.addEventListener("scroll",() => {
-    if (scrollY > 380) {
-        document.querySelector(".about-us .description").style.animationPlayState ="running";
+/* Start About Us */
+const aboutSection = document.querySelector(".about-us");
+const aboutDescription = document.querySelector(".about-us .description");
+const aboutImg = document.querySelector(".about-us .img");
+
+window.addEventListener("scroll", function () {
+    const scrollThreshold = aboutSection.offsetTop - 200;
+
+    if (window.scrollY >= scrollThreshold) {
+        aboutDescription.style.animationPlayState = "running";
+        aboutImg.style.animationPlayState = "running";
     }
 });
-window.addEventListener("scroll",() => {
-    if (scrollY > 380) {
-        document.querySelector(".about-us .img").style.animationPlayState ="running";
-    }
-});
+
 /* End About Us */
 
+
 /* Start Skills Page */
+const ourSkills = document.querySelector(".our-skills");
+const skillSpans = document.querySelectorAll(".our-skills span");
 
-let ourSkills = document.querySelector(".our-skills");
-let spanSkills = document.querySelectorAll(".our-skills span");
+window.addEventListener("scroll", function () {
+    const scrollThreshold = ourSkills.offsetTop - 200;
 
-window.addEventListener("scroll",() => {
-    if (scrollY > 679) {
-        spanSkills.forEach((sk) => sk.style.animationPlayState = "running");
+    if (window.scrollY >= scrollThreshold) {
+        skillSpans.forEach((sk) => sk.style.animationPlayState = "running");
     }
 });
-    
 
 /* End Skills Page */
 
-/* Start Gallery */
-let gallerySection = document.querySelector(".gallery");
-let ourGallery = document.querySelectorAll(".gallery .imgs div img");
 
-window.addEventListener("scroll",() => {
-    if (scrollY >= 1100) {
+/* Start Gallery */
+const gallerySection = document.querySelector(".gallery");
+const galleryImages = document.querySelectorAll(".gallery .imgs div img");
+
+
+window.addEventListener("scroll", function () {
+    const scrollThreshold = gallerySection.offsetTop;
+
+    if (window.scrollY >= scrollThreshold) {
         gallerySection.style.opacity = "1";
     }
 });
 
-ourGallery.forEach((img) => {
-    img.addEventListener("click",function (e) {
-        // create overlay
+galleryImages.forEach((img) => {
+    img.addEventListener("click", function (e) {
         let overlay = document.createElement("div");
         overlay.className = "popup-overlay";
         document.body.appendChild(overlay);
 
-        // create popup box
         let popupBox = document.createElement("div");
         popupBox.className = "popup-box";
-        let popupImg = document.createElement("img");
-        popupImg.src = img.src;
-        document.body.appendChild(popupBox);
-        popupBox.appendChild(popupImg);
 
-        // create img title by alt
-        if (img.alt !== null) {
+        if (img.alt) {
             let imgTitle = document.createElement("h2");
             let textTitle = document.createTextNode(img.alt);
             imgTitle.appendChild(textTitle);
-            popupBox.prepend(imgTitle);
+            popupBox.appendChild(imgTitle);
         }
 
-        // create close button
+        let popupImg = document.createElement("img");
+        popupImg.src = img.src;
+        popupBox.appendChild(popupImg);
+
         let close = document.createElement("div");
         close.className = "close-button";
         let closeIcon = document.createTextNode("X");
         close.appendChild(closeIcon);
         popupBox.appendChild(close);
+
+        document.body.appendChild(popupBox);
     });
 });
 
-// close popup
-document.addEventListener("click",function (e) {
-    if (e.target.className == "close-button") {
+document.addEventListener("click", function (e) {
+    if (e.target.classList.contains("close-button")) {
         e.target.parentNode.remove();
         document.querySelector(".popup-overlay").remove();
+    }
+    if (e.target.classList.contains("popup-overlay")) {
+        e.target.remove();
+        document.querySelector(".popup-box").remove();
     }
 });
 
@@ -353,8 +335,8 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
-
 /* End Gallery */
+
 
 /* Start Timeline */
 let timelineSection = document.querySelector(".timeline");
@@ -380,7 +362,7 @@ let testimonialsSection = document.querySelector(".testimonials");
 let current = 0;
 const boxes = [document.querySelector(".ahmed"), document.querySelector(".ali"), document.querySelector(".Amr")];
 
-window.addEventListener("scroll",() => {
+window.addEventListener("scroll",function () {
     if (scrollY >= testimonialsSection.offsetTop) {
         updateBoxDisplay(current);
     }
