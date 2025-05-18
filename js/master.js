@@ -3,10 +3,10 @@
 window.addEventListener("load",function () {
     setTimeout(() => {
         document.querySelector(".loading-bar").classList.add("hide");
-    }, 3500);
+    }, 1500);
     setTimeout(() => {
         document.querySelector(".loading-container").classList.add("hide");
-    }, 4000);
+    }, 2000);
 });
 
 /* End Loading */
