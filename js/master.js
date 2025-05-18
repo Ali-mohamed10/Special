@@ -1,3 +1,16 @@
+/* Start Loading */
+
+window.addEventListener("load",function () {
+    setTimeout(() => {
+        document.querySelector(".loading-bar").classList.add("hide");
+    }, 3500);
+    setTimeout(() => {
+        document.querySelector(".loading-container").classList.add("hide");
+    }, 4000);
+});
+
+/* End Loading */
+
 /* start settings box */
 let setting = document.querySelector(".settings-box");
 let iconBox = document.querySelector(".settings-box .icon-box");
@@ -47,7 +60,8 @@ function manageBackgroundRandomization(enable) {
         backgroundInterval = setInterval(() => {
             let randomNum = Math.floor(Math.random() * imgsArray.length);
             landing.style.backgroundImage = 'url("imgs/' + imgsArray[randomNum] + '")';
-        }, 4000);
+            console.log(window.localStorage.background);
+        }, 6000);
     }
 }
 
@@ -239,7 +253,7 @@ window.addEventListener("scroll", function () {
 });
 
 galleryImages.forEach((img) => {
-    img.addEventListener("click", function (e) {
+    img.addEventListener("click", function () {
         let overlay = document.createElement("div");
         overlay.className = "popup-overlay";
         document.body.appendChild(overlay);
