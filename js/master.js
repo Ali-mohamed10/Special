@@ -163,8 +163,9 @@ function typeWriter() {
         setTimeout(typeWriter, speed);
     }
 }
-
-window.addEventListener("load", typeWriter());
+setTimeout(() => {
+    window.addEventListener("load", typeWriter());
+}, 3000);
 
 /* end landing page */
 
